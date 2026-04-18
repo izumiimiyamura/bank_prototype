@@ -1,3 +1,5 @@
+import sys
+
 class Transactions:
     # Validates the amount given by the user.
     def validate_amount(self, amount):
@@ -6,11 +8,12 @@ class Transactions:
             try:
                 return float(amount)
             except ValueError:
-                return "Invalid Amount"
+                sys.exit()
 
         #Checking if the amount is negative.
         if amount < 0 :
-            return "The Amount cannot be less than zero"
+            print("Amount cannot be negative.")
+            sys.exit()
         
         # If nothing wrong return amount.
         return amount
@@ -43,11 +46,18 @@ class BankAccount(Transactions):
 
     @classmethod
     def create(cls):
-        name = input("Name: ")
+        while True:
+            name = input("Name: ")
+            if not name:
+                continue
+            break
+
+
         try:
             balance = float(input("Balance: "))
         except ValueError:
-            return "Not a Valid Balance."
+            print("Invalid balance provided.")
+            sys.exit()
         return cls(name, balance)
 
 
