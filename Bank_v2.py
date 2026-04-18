@@ -17,10 +17,18 @@ class Transactions:
 
     def withdraw(self):
         amount = self.validate_amount(float(input("Amount to withdraw: ")))
-        if self.balance > amount:
-            self.balance -= amount
-            print(f"Remaining Balance: {self.balance}")
-        return "Insufficient Balance"
+
+        if amount > self.balance:
+            print(f"Current Balance: {self.balance}")
+            return "Insufficient Balance."
+        
+        #Updating account balance.
+        self.balance -= amount
+        print(f"Remaining Balance: {self.balance}")
+
+        #Adding the transation to history.
+        self.history.append({"type": "Withdraw", "amount": amount, "balance": self.balance})
+        return "Transaction successful"
 
 
 class BankAccount(Transactions):
